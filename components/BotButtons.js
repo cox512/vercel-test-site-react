@@ -64,7 +64,7 @@ export default function BotButtons() {
 
         <a
           className="tour_link"
-          href="https://useful-useful-daffodil.glitch.me/?product_tour_id=556887"
+          href="https://vercel-test-site-react.vercel.app?product_tour_id=598573"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -88,7 +88,7 @@ export default function BotButtons() {
         </button>
         <a
           className="survey_link"
-          href="https://evening-shelf-73540.herokuapp.com/?intercom_survey_id=24407803"
+          href="https://vercel-test-site-react.vercel.app?intercom_survey_id=24407890"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -105,24 +105,17 @@ export default function BotButtons() {
           Help Center
         </a>
       </div>
-      {/* <div className="button-row">
+      <div className="button-row">
         <button
           type="button"
           className="button-bot button-one"
           onClick={() => handleTrackEvent("event-click")}
           data-intercom-target="Button"
         >
-          Event 1
+          Event-Click Event
         </button>
-        <button
-          type="button"
-          className="button-bot button-one"
-          onClick={() => handleTrackEvent("event-click")}
-          data-intercom-target="Button"
-        >
-          Event 2
-        </button>
-      </div> */}
+
+      </div>
       <div className="button-row">
         <Link href="/new-tab" target="_blank">
           Link to a new tab
