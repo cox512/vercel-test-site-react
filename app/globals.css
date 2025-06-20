@@ -1,0 +1,10 @@
+/* Minimal global styles - main styles are in /public/styles.css */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
