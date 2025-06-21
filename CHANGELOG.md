@@ -3,6 +3,14 @@
 ## Overview
 Converted the Express.js + EJS website to a React-based Next.js application for Vercel deployment.
 
+## Latest Update - UI Improvements (v3.2)
+
+### **Text Alignment Improvements**
+- **UPDATED**: `app/page.js` - Centered h1 and p tag text using inline styles
+  - Added `style={{textAlign: 'center'}}` to h1 element (title)
+  - Added `style={{textAlign: 'center'}}` to p element (description)
+- **IMPROVED**: Better visual hierarchy and user experience on main page
+
 ## Latest Update - Critical Intercom Bug Fixes (v3.1)
 
 ### **🚨 CRITICAL FIXES APPLIED**

@@ -33,26 +33,16 @@ export default function BotButtons() {
 
   return (
     <div className="bot-buttons">
-      <div className="button-row">
+      <div className="button-row" >
         <button
           type="button"
           className="button-bot button-one"
           onClick={() => handleTrackEvent("event-click")}
-          data-intercom-target="Button"
+          data-intercom-target="bot-button"
         >
           Bot Button 1
         </button>
-        <button
-          type="button"
-          className="button-bot button-two"
-          onClick={() => handleTrackEvent("event-click")}
-          data-intercom-target="Button"
-        >
-          Bot Button 2
-        </button>
       </div>
-
-      {/* FIX TOUR BUTTON AND TOUR LINK*/}
       <div className="button-row">
         <button
           type="button"
@@ -61,7 +51,6 @@ export default function BotButtons() {
         >
           Tour Button
         </button>
-
         <a
           className="tour_link"
           href="https://vercel-test-site-react.vercel.app?product_tour_id=598573"

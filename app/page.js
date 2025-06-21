@@ -8,9 +8,12 @@ import ActionButtons from "../components/ActionButtons";
 export default function Home() {
   return (
     <main className="about__display--row">
-      <h1>Home</h1>
-      <h2>Intercom Integration Test</h2>
-      <p>Test Intercom functionality with the official React SDK.</p>
+      <h1 style={{ textAlign: "center" }}>
+        Intercom Test Site - NPM React installation
+      </h1>
+      <p style={{ textAlign: "center" }}>
+        Please enter your details to log in to Intercom.
+      </p>
 
       <div className="forms-container">
         <div className="form-column">
