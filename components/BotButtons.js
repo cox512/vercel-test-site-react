@@ -31,9 +31,21 @@ export default function BotButtons() {
     }
   };
 
+  const handleNewTabClick = (e) => {
+    e.preventDefault();
+    // Open in new tab - update method will be called on the destination page
+    window.open("/new-tab", "_blank");
+  };
+
+  const handlePageTwoClick = (e) => {
+    e.preventDefault();
+    // Navigate to page two - update method will be called on the destination page
+    window.location.href = "/page-two";
+  };
+
   return (
     <div className="bot-buttons">
-      <div className="button-row" >
+      <div className="button-row">
         <button
           type="button"
           className="button-bot button-one"
@@ -103,15 +115,21 @@ export default function BotButtons() {
         >
           Event-Click Event
         </button>
-
       </div>
       <div className="button-row">
-        <Link href="/new-tab" target="_blank">
+        <a
+          href="/new-tab"
+          target="_blank"
+          onClick={handleNewTabClick}
+          className="tour_link"
+        >
           Link to a new tab
-        </Link>
+        </a>
       </div>
       <div className="button-row">
-        <Link href="/page-two">Page Two</Link>
+        <a href="/page-two" onClick={handlePageTwoClick} className="tour_link">
+          Page Two
+        </a>
       </div>
     </div>
   );

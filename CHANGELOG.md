@@ -216,3 +216,76 @@ The site is now a modern React/Next.js application with official Intercom SDK in
 - Intercom integration components and forms
 - Vercel deployment configuration
 - Development and production build setup
+
+## [Unreleased]
+
+### Added
+- Two color selector dropdowns to page-two (`app/page-two/page.js`):
+  - Click-based dropdown with "displays on click" heading (traditional HTML select element)
+  - Hover-based dropdown with "displays on hover" heading (custom dropdown that opens on mouse hover)
+  - Both dropdowns have identical styling and functionality
+  - Each dropdown shows the selected color below it
+  - Enhanced existing color selector with proper heading and selection display
+  - Added state management for both dropdowns and hover interactions
+  - Added custom CSS styles for hover dropdown to match the appearance of the standard select dropdown
+  - Both dropdowns control the same background color (selecting from one clears the other)
+- Intercom update method call for navigation buttons:
+  - Added update call with `last_request_at` timestamp when "Link to a new tab" page loads
+  - Added update call with `last_request_at` timestamp when "Page Two" page loads
+  - Both navigation buttons now trigger Intercom user update after navigation on the destination pages
+
+### Changed
+- Updated main page layout to show modal trigger buttons in place of direct form rendering
+- Modified form container styling to work properly within modals
+- Changed modal section header from "Forms" to "Modals" with centered alignment
+- Enhanced form submission behavior:
+  - Forms now clear automatically upon submission
+  - Modals dismiss automatically after form submission
+  - Track Events form shows success/error messages with event name
+  - Both forms close modal on successful submission or error
+- Made Trigger Tour modal a blocking modal:
+  - Cannot be dismissed by clicking outside the modal
+  - Cannot be dismissed with ESC key
+  - Requires explicit user action (Submit, Cancel, or X button)
+  - Background UI is non-interactive when modal is open
+  - Added Cancel button to TourForm for explicit dismissal
+- Enhanced dropdown styling for perfect visual consistency:
+  - Both dropdowns now have identical width, padding, font size, and colors
+  - Standardized min-height to 40px for both dropdowns
+  - Added consistent focus states with blue border and subtle shadow
+  - Improved padding and spacing for better visual alignment
+  - Added font-family inheritance and line-height for text consistency
+
+### Technical Details
+- Created `components/Modal.js` with reusable modal functionality
+- Added modal CSS styles to `public/styles.css`
+- Updated `app/page.js` to use useState for modal state management
+- Added "use client" directive to main page component for React hooks
+- Modal supports clicking outside to close, ESC key to close, and close button
+- Modal prevents background scrolling when open
+- Modified `TrackEventForm.js` and `TourForm.js` to accept `onClose` prop
+- Added success/error alert messages to TrackEventForm with dynamic event names
+- Implemented automatic form clearing and modal dismissal on submission
+- Enhanced Modal component with `blocking` prop to control dismissal behavior
+- Added Cancel button styling (`.cancel-btn`) to CSS
+- Updated TourForm with Cancel button that clears form and closes modal
+- Modified ESC key and overlay click handlers to respect blocking behavior
+- Added dropdown functionality to page-two:
+  - Added `selectedColorHover` and `isHoverDropdownOpen` state variables
+  - Enhanced existing `handleColorChange` to clear hover selection when click dropdown is used
+  - Implemented `handleHoverColorChange` function with mutual exclusion logic
+  - Modified useEffect to monitor both dropdown selections for background color changes
+  - Added hover dropdown styles to `public/styles.css` including:
+    - `.hover-dropdown` for container positioning
+    - `.hover-dropdown-trigger` for the main dropdown button
+    - `.hover-dropdown-options` for the options container
+    - `.hover-option` for individual option styling
+    - Enhanced styling consistency with identical padding, fonts, colors, and dimensions
+    - Added focus states and improved visual alignment for both dropdown types
+- Added navigation button update functionality:
+  - Added `update` function calls to destination pages (new-tab and page-two)
+  - Created useEffect hooks on both destination pages to call update with current timestamp on page load
+  - Updated `handleNewTabClick` and `handlePageTwoClick` handlers to navigate without calling update
+  - Converted Next.js Link components to anchor tags with onClick handlers
+  - Applied existing `tour_link` CSS class for consistent link styling
+  - Added "use client" directive to new-tab page for React hooks

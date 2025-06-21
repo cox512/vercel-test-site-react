@@ -1,9 +1,24 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { update } from "@intercom/messenger-js-sdk";
 
 export default function PageTwo() {
   const [selectedColor, setSelectedColor] = useState("");
+  const [selectedColorHover, setSelectedColorHover] = useState("");
+  const [isHoverDropdownOpen, setIsHoverDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    // Call update method after navigation to this page
+    try {
+      update({
+        last_request_at: parseInt(new Date().getTime() / 1000),
+      });
+      console.log("Intercom update called after navigation to page-two");
+    } catch (error) {
+      console.error("Error updating Intercom on page-two:", error);
+    }
+  }, []);
 
   useEffect(() => {
     // Remove all background color classes
@@ -14,9 +29,10 @@ export default function PageTwo() {
       "bg-blue"
     );
 
-    // Add the selected color class if a color was chosen
-    if (selectedColor) {
-      document.body.classList.add(`bg-${selectedColor}`);
+    // Add the selected color class if a color was chosen from either dropdown
+    const activeColor = selectedColor || selectedColorHover;
+    if (activeColor) {
+      document.body.classList.add(`bg-${activeColor}`);
     }
 
     // Cleanup function to remove classes when component unmounts
@@ -28,16 +44,32 @@ export default function PageTwo() {
         "bg-blue"
       );
     };
-  }, [selectedColor]);
+  }, [selectedColor, selectedColorHover]);
 
   const handleColorChange = (e) => {
     setSelectedColor(e.target.value);
+    // Clear the hover dropdown selection when click dropdown is used
+    if (e.target.value) {
+      setSelectedColorHover("");
+    }
+  };
+
+  const handleHoverColorChange = (color) => {
+    setSelectedColorHover(color);
+    setIsHoverDropdownOpen(false);
+    // Clear the click dropdown selection when hover dropdown is used
+    if (color) {
+      setSelectedColor("");
+    }
   };
 
   return (
     <div className="message-container">
       <h1 className="message">Choose a background color</h1>
+
+      {/* Click-based dropdown */}
       <div className="color-selector">
+        <h4>Displays on click</h4>
         <select value={selectedColor} onChange={handleColorChange}>
           <option value="">Select a color</option>
           <option value="orange">Orange</option>
@@ -45,6 +77,65 @@ export default function PageTwo() {
           <option value="green">Green</option>
           <option value="blue">Blue</option>
         </select>
+        {selectedColor && (
+          <p style={{ marginTop: "10px", textAlign: "center" }}>
+            Selected: {selectedColor}
+          </p>
+        )}
+      </div>
+
+      {/* Hover-based dropdown */}
+      <div className="color-selector">
+        <h4>Displays on hover</h4>
+        <div
+          className="hover-dropdown"
+          onMouseEnter={() => setIsHoverDropdownOpen(true)}
+          onMouseLeave={() => setIsHoverDropdownOpen(false)}
+        >
+          <div className="hover-dropdown-trigger">
+            {selectedColorHover || "Select a color"}
+            <span className="dropdown-arrow">▼</span>
+          </div>
+          {isHoverDropdownOpen && (
+            <div className="hover-dropdown-options">
+              <div
+                className="hover-option"
+                onClick={() => handleHoverColorChange("")}
+              >
+                Select a color
+              </div>
+              <div
+                className="hover-option"
+                onClick={() => handleHoverColorChange("orange")}
+              >
+                Orange
+              </div>
+              <div
+                className="hover-option"
+                onClick={() => handleHoverColorChange("red")}
+              >
+                Red
+              </div>
+              <div
+                className="hover-option"
+                onClick={() => handleHoverColorChange("green")}
+              >
+                Green
+              </div>
+              <div
+                className="hover-option"
+                onClick={() => handleHoverColorChange("blue")}
+              >
+                Blue
+              </div>
+            </div>
+          )}
+        </div>
+        {selectedColorHover && (
+          <p style={{ marginTop: "10px", textAlign: "center" }}>
+            Selected: {selectedColorHover}
+          </p>
+        )}
       </div>
     </div>
   );

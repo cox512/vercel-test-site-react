@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import {trackEvent} from "@intercom/messenger-js-sdk";
+import { trackEvent } from "@intercom/messenger-js-sdk";
 
-export default function TrackEventForm() {
+export default function TrackEventForm({ onClose }) {
   const [formData, setFormData] = useState({
     event_name: "",
     metadata_name: "",
@@ -43,9 +43,20 @@ export default function TrackEventForm() {
         trackEvent(eventName);
         console.log("Intercom event tracked:", eventName);
       }
+
+      // Success message
+      alert(`${formData.event_name} has been successfully submitted`);
+
+      // Clear form and close modal
+      clearForm();
+      if (onClose) onClose();
     } catch (error) {
       console.error("Error tracking Intercom event:", error);
-      alert("Error tracking event. Check console for details.");
+      alert(`There was an error submitting the ${formData.event_name} event`);
+
+      // Still clear form and close modal on error
+      clearForm();
+      if (onClose) onClose();
     }
   };
 
@@ -59,7 +70,10 @@ export default function TrackEventForm() {
 
   return (
     <div className="form-container">
-      <h3>Track Events 2</h3>
+      <h3>Track Events</h3>
+      <p>
+        You can dismiss this modal by clicking anywhere outside of it.
+      </p>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="event_name">Event Name:</label>
