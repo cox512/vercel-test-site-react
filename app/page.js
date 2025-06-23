@@ -5,7 +5,6 @@ import UserDataForm from "../components/UserDataForm";
 import CustomAttributesForm from "../components/CustomAttributesForm";
 import TrackEventForm from "../components/TrackEventForm";
 import TourForm from "../components/TourForm";
-import BotButtons from "../components/BotButtons";
 import ActionButtons from "../components/ActionButtons";
 import Modal from "../components/Modal";
 
@@ -51,8 +50,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-      <BotButtons />
 
       {/* Modals */}
       <Modal

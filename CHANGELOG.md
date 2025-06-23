@@ -220,15 +220,28 @@ The site is now a modern React/Next.js application with official Intercom SDK in
 ## [Unreleased]
 
 ### Added
-- Two color selector dropdowns to page-two (`app/page-two/page.js`):
-  - Click-based dropdown with "displays on click" heading (traditional HTML select element)
-  - Hover-based dropdown with "displays on hover" heading (custom dropdown that opens on mouse hover)
-  - Both dropdowns have identical styling and functionality
-  - Each dropdown shows the selected color below it
-  - Enhanced existing color selector with proper heading and selection display
-  - Added state management for both dropdowns and hover interactions
-  - Added custom CSS styles for hover dropdown to match the appearance of the standard select dropdown
-  - Both dropdowns control the same background color (selecting from one clears the other)
+- **Sidebar Navigation**: Added a collapsible sidebar navigation on the left side of the page
+  - Created new `Sidebar.js` component with all BotButtons functionality
+  - Created `LayoutWrapper.js` component to manage sidebar state
+  - Sidebar automatically displays when page loads but can be hidden via toggle button
+  - All content in sidebar is left-justified as requested
+  - Responsive design that adapts to mobile screens
+  - Smooth animations for sidebar show/hide transitions
+  - Added "Workflows" section heading above Bot Button 1
+  - Added "Events" section heading above Event-Click Event button
+  - Centered sidebar title text to prevent overlap with toggle button
+  - Replaced Help Center text button with black circular icon button using helpcenter-svgrepo-com.svg
+  - Sized Help Center button to match height of other sidebar buttons (40px)
+  - Left-justified Help Center button and added z-index to prevent overlap with other elements
+  - Made all sidebar buttons green except Help Center button (changed secondary buttons from blue to green)
+  - Reduced sidebar width from 280px to 200px and optimized button widths to fit content
+  - Set button min-width to accommodate longest button text ("Event-Click Event")
+  - Reduced sidebar padding from 20px to 15px for better proportions
+  - Restored Help Center button to circular shape (40px diameter) while keeping other buttons optimized
+  - Removed obsolete BotButtons.js component (functionality moved to Sidebar.js)
+  - Updated README.md to reflect current component structure
+  - Fixed main content centering when sidebar is closed (content now properly centers on page)
+  - Improved responsive layout with proper width calculations and padding for all screen sizes
 - Intercom update method call for navigation buttons:
   - Added update call with `last_request_at` timestamp when "Link to a new tab" page loads
   - Added update call with `last_request_at` timestamp when "Page Two" page loads
@@ -255,37 +268,20 @@ The site is now a modern React/Next.js application with official Intercom SDK in
   - Added consistent focus states with blue border and subtle shadow
   - Improved padding and spacing for better visual alignment
   - Added font-family inheritance and line-height for text consistency
+- **Layout Structure**: Updated `layout.js` to use new `LayoutWrapper` component
+- **Main Content**: Main content area now dynamically adjusts margin when sidebar is open/closed
+- **Component Organization**: Moved all BotButtons functionality into sidebar navigation
+
+### Removed
+- **BotButtons from Main Page**: Removed `BotButtons` component from main page (`page.js`) since functionality moved to sidebar
+
+### Styled
+- **Sidebar Styling**: Added comprehensive CSS for sidebar positioning, styling, and responsiveness
+  - Fixed positioning with smooth transitions
+  - Left-justified content layout
+  - Organized sections with clear visual hierarchy
+  - Hover effects and interactive feedback
+  - Mobile-responsive breakpoints
 
 ### Technical Details
-- Created `components/Modal.js` with reusable modal functionality
-- Added modal CSS styles to `public/styles.css`
-- Updated `app/page.js` to use useState for modal state management
-- Added "use client" directive to main page component for React hooks
-- Modal supports clicking outside to close, ESC key to close, and close button
-- Modal prevents background scrolling when open
-- Modified `TrackEventForm.js` and `TourForm.js` to accept `onClose` prop
-- Added success/error alert messages to TrackEventForm with dynamic event names
-- Implemented automatic form clearing and modal dismissal on submission
-- Enhanced Modal component with `blocking` prop to control dismissal behavior
-- Added Cancel button styling (`.cancel-btn`) to CSS
-- Updated TourForm with Cancel button that clears form and closes modal
-- Modified ESC key and overlay click handlers to respect blocking behavior
-- Added dropdown functionality to page-two:
-  - Added `selectedColorHover` and `isHoverDropdownOpen` state variables
-  - Enhanced existing `handleColorChange` to clear hover selection when click dropdown is used
-  - Implemented `handleHoverColorChange` function with mutual exclusion logic
-  - Modified useEffect to monitor both dropdown selections for background color changes
-  - Added hover dropdown styles to `public/styles.css` including:
-    - `.hover-dropdown` for container positioning
-    - `.hover-dropdown-trigger` for the main dropdown button
-    - `.hover-dropdown-options` for the options container
-    - `.hover-option` for individual option styling
-    - Enhanced styling consistency with identical padding, fonts, colors, and dimensions
-    - Added focus states and improved visual alignment for both dropdown types
-- Added navigation button update functionality:
-  - Added `update` function calls to destination pages (new-tab and page-two)
-  - Created useEffect hooks on both destination pages to call update with current timestamp on page load
-  - Updated `handleNewTabClick` and `handlePageTwoClick` handlers to navigate without calling update
-  - Converted Next.js Link components to anchor tags with onClick handlers
-  - Applied existing `tour_link` CSS class for consistent link styling
-  - Added "use client" directive to new-tab page for React hooks
+- Created `components/Modal.js`

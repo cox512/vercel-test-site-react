@@ -1,5 +1,6 @@
 import "./globals.css";
 import IntercomProvider from "../components/IntercomProvider";
+import LayoutWrapper from "../components/LayoutWrapper";
 
 export const metadata = {
   title: "Intercom Test Site - React",
@@ -22,7 +23,9 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="/styles.css" />
       </head>
       <body>
-        <IntercomProvider>{children}</IntercomProvider>
+        <IntercomProvider>
+          <LayoutWrapper>{children}</LayoutWrapper>
+        </IntercomProvider>
       </body>
     </html>
   );

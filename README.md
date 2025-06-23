@@ -52,7 +52,8 @@ npm run dev
 │   ├── TrackEventForm.js      # Event tracking form
 │   ├── TourForm.js            # Tour launching form
 │   ├── CustomAttributesForm.js # User attributes form
-│   ├── BotButtons.js          # Interactive test buttons
+│   ├── Sidebar.js             # Collapsible sidebar with interactive test buttons
+│   ├── LayoutWrapper.js       # Layout component managing sidebar state
 │   └── ActionButtons.js       # Update/shutdown actions
 └── public/
     └── styles.css         # Project styles
