@@ -1,16 +1,32 @@
 "use client";
 
 import { update, shutdown } from "@intercom/messenger-js-sdk";
+import { addJWTToUpdateData } from "../utils/jwt";
 
 export default function ActionButtons() {
-  const performEmptyUpdate = () => {
+  const performEmptyUpdate = async () => {
     try {
-      update({
+      const updateData = {
         last_request_at: parseInt(new Date().getTime() / 1000),
-      });
+      };
+
+      // Add JWT token if possible
+      let finalUpdateData = updateData;
+      try {
+        finalUpdateData = await addJWTToUpdateData(updateData);
+      } catch (error) {
+        console.warn(
+          "JWT generation failed for update, proceeding without JWT:",
+          error
+        );
+      }
+
+      update(finalUpdateData);
       console.log(
         "Intercom empty update performed at:",
-        new Date().toISOString()
+        new Date().toISOString(),
+        "with data:",
+        finalUpdateData
       );
     } catch (error) {
       console.error("Error performing Intercom update:", error);

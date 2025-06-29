@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { update } from "@intercom/messenger-js-sdk";
+import { addJWTToUpdateData } from "../../utils/jwt";
 
 export default function PageTwo() {
   const [selectedColor, setSelectedColor] = useState("");
@@ -10,14 +11,34 @@ export default function PageTwo() {
 
   useEffect(() => {
     // Call update method after navigation to this page
-    try {
-      update({
-        last_request_at: parseInt(new Date().getTime() / 1000),
-      });
-      console.log("Intercom update called after navigation to page-two");
-    } catch (error) {
-      console.error("Error updating Intercom on page-two:", error);
-    }
+    const performUpdate = async () => {
+      try {
+        const updateData = {
+          last_request_at: parseInt(new Date().getTime() / 1000),
+        };
+
+        // Add JWT token if possible
+        let finalUpdateData = updateData;
+        try {
+          finalUpdateData = await addJWTToUpdateData(updateData);
+        } catch (error) {
+          console.warn(
+            "JWT generation failed for update, proceeding without JWT:",
+            error
+          );
+        }
+
+        update(finalUpdateData);
+        console.log(
+          "Intercom update called after navigation to page-two with data:",
+          finalUpdateData
+        );
+      } catch (error) {
+        console.error("Error updating Intercom on page-two:", error);
+      }
+    };
+
+    performUpdate();
   }, []);
 
   useEffect(() => {

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { update } from "@intercom/messenger-js-sdk";
+import { addJWTToUpdateData } from "../utils/jwt";
 
 export default function CustomAttributesForm() {
   const [formData, setFormData] = useState({
@@ -16,7 +17,7 @@ export default function CustomAttributesForm() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.attribute_name || !formData.attribute_value) {
@@ -29,10 +30,21 @@ export default function CustomAttributesForm() {
       [formData.attribute_name]: formData.attribute_value,
     };
 
+    // Add JWT token if possible
+    let finalUpdateData = customData;
+    try {
+      finalUpdateData = await addJWTToUpdateData(customData);
+    } catch (error) {
+      console.warn(
+        "JWT generation failed for update, proceeding without JWT:",
+        error
+      );
+    }
+
     // Update the user with the custom attribute using the official SDK
     try {
-      update(customData);
-      console.log("Intercom updated with custom data:", customData);
+      update(finalUpdateData);
+      console.log("Intercom updated with custom data:", finalUpdateData);
     } catch (error) {
       console.error("Error updating Intercom:", error);
     }

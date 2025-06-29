@@ -3,6 +3,121 @@
 ## Overview
 Converted the Express.js + EJS website to a React-based Next.js application for Vercel deployment.
 
+## Latest Update - JWT Authentication Bug Fix (v4.1)
+
+### **🐛 CRITICAL BUG FIXES**
+
+#### **Fixed JSON Parsing Error During User Boot**
+- **ISSUE**: `SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON` when booting users with user_id
+- **ROOT CAUSE**: API route `/api/generate-jwt` was failing due to:
+  1. Missing `jsonwebtoken` dependency in package.json
+  2. Module syntax mismatch (mixing CommonJS `require()` with ES modules `export default`)
+
+#### **Fixes Applied**
+- **ADDED**: `jsonwebtoken` dependency to package.json via `npm install jsonwebtoken`
+- **FIXED**: `api/generate-jwt.js` module syntax - changed `const jwt = require("jsonwebtoken");` to `import jwt from "jsonwebtoken";`
+- **MOVED**: API route from incorrect location `api/generate-jwt.js` to proper App Router location `app/api/generate-jwt/route.js`
+- **CONVERTED**: API route from Pages Router format to App Router format with proper `POST` export and Web API Request/Response objects
+- **RESOLVED**: API route now properly returns JSON instead of HTML error pages
+
+#### **Technical Details**
+- **Package Added**: jsonwebtoken v9.0.2 (13 new packages installed)
+- **Module System**: Standardized to ES modules throughout API route
+- **Error Resolution**: JSON parsing now works correctly in JWT utility functions
+- **Testing**: User boot with user_id now successfully generates and includes JWT tokens
+
+#### **Files Changed**
+- `package.json` - Added jsonwebtoken dependency
+- `package-lock.json` - Updated with new dependency tree
+- `api/generate-jwt.js` - DELETED (moved to App Router location)
+- `app/api/generate-jwt/route.js` - CREATED with proper App Router format
+
+### **Verification Steps**
+1. ✅ `npm install jsonwebtoken` completed successfully
+2. ✅ API route moved to correct App Router location
+3. ✅ API route converted to proper App Router format
+4. ✅ JWT API endpoint tested and confirmed working (returns valid JSON with JWT token)
+5. ✅ JSON parsing errors resolved - user boot with user_id now works
+
+## Previous Update - JWT Authentication Integration (v4.0)
+
+### **🔒 JWT Authentication Implementation**
+
+#### **New Files Created**
+- **CREATED**: `api/generate-jwt.js` - Vercel serverless function for JWT token generation
+  - Uses `jsonwebtoken` package to sign tokens with API secret
+  - Validates required user_id parameter
+  - Supports optional email and custom sensitive attributes
+  - Returns signed JWT tokens with 1-hour expiration
+  - Includes proper error handling and security validation
+
+- **CREATED**: `utils/jwt.js` - JWT utility functions for frontend
+  - `fetchJWT()` - Fetches JWT tokens from serverless function
+  - `addJWTToBootData()` - Adds JWT to boot calls when user_id is present
+  - `addJWTToUpdateData()` - Adds JWT to update calls when possible
+  - Includes comprehensive error handling and fallback behavior
+
+#### **Updated Components with JWT Integration**
+- **UPDATED**: `components/UserDataForm.js` - Boot calls now include JWT tokens
+  - Added JWT token generation before boot calls
+  - Maintains backward compatibility if JWT generation fails
+  - Enhanced logging to show JWT inclusion
+
+- **UPDATED**: `components/ActionButtons.js` - Update calls now include JWT tokens
+  - Added JWT token generation for empty update calls
+  - Async update function implementation
+  - Graceful fallback if JWT generation fails
+
+- **UPDATED**: `components/CustomAttributesForm.js` - Custom attribute updates include JWT
+  - Added JWT token generation for attribute update calls
+  - Async form submission handling
+  - Error handling for JWT generation failures
+
+- **UPDATED**: `app/new-tab/page.js` - Navigation updates include JWT tokens
+  - Added JWT token generation for page navigation updates
+  - Async useEffect implementation for update calls
+  - Proper error handling and logging
+
+- **UPDATED**: `app/page-two/page.js` - Page navigation updates include JWT tokens
+  - Added JWT token generation for page navigation updates
+  - Async useEffect implementation for update calls
+  - Consistent error handling across navigation
+
+#### **Security Features**
+- **JWT Token Generation**: Server-side signing with API secret
+- **Token Expiration**: 1-hour expiration for security
+- **User Validation**: Required user_id validation
+- **Fallback Behavior**: Graceful degradation if JWT generation fails
+- **Error Logging**: Comprehensive logging for debugging
+
+#### **Technical Implementation**
+- **Package Dependency**: Requires `jsonwebtoken` npm package
+- **Environment Variables**: Requires `INTERCOM_API_SECRET` environment variable
+- **Async Operations**: All JWT operations are asynchronous with proper error handling
+- **Backward Compatibility**: All existing functionality preserved with JWT as enhancement
+
+### **Package Installation Required**
+```bash
+npm install jsonwebtoken
+```
+
+### **Environment Variables Required**
+```env
+NEXT_PUBLIC_INTERCOM_APP_ID=your_intercom_app_id
+INTERCOM_API_SECRET=your_intercom_api_secret
+```
+
+### **Vercel Deployment Setup**
+1. Add `INTERCOM_API_SECRET` to Vercel environment variables
+2. Ensure `jsonwebtoken` is installed in dependencies
+3. Deploy - serverless function will be automatically available at `/api/generate-jwt`
+
+### **JWT Integration Points**
+- **Boot Calls**: JWT added to all user authentication/boot operations
+- **Update Calls**: JWT added to user data updates, custom attributes, and navigation updates
+- **Error Handling**: Comprehensive fallback behavior if JWT generation fails
+- **Logging**: Enhanced logging to track JWT inclusion in all operations
+
 ## Latest Update - UI Improvements (v3.2)
 
 ### **Text Alignment Improvements**

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { boot } from "@intercom/messenger-js-sdk";
+import { addJWTToBootData } from "../utils/jwt";
 
 export default function UserDataForm() {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ export default function UserDataForm() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Create boot data object, only including non-empty values
@@ -55,10 +56,18 @@ export default function UserDataForm() {
       );
     }
 
+    // Add JWT token to boot data if user_id is present
+    let finalBootData = bootData;
+    try {
+      finalBootData = await addJWTToBootData(bootData);
+    } catch (error) {
+      console.warn("JWT generation failed, proceeding without JWT:", error);
+    }
+
     // Boot the user in Intercom using the official SDK
     try {
-      boot(bootData);
-      console.log("Intercom booted with data:", bootData);
+      boot(finalBootData);
+      console.log("Intercom booted with data:", finalBootData);
     } catch (error) {
       console.error("Error booting Intercom:", error);
     }
