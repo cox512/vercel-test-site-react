@@ -244,6 +244,7 @@ vercel --prod
 You'll need to set up the following environment variables in your Vercel project:
 
 #### Required Environment Variables
+- NOTE: Client-side variables in next.js apps require the 'NEXT_PUBLIC_' prefix in order for them to work. So make sure you include that in the name. The INTERCOM_JSON_SECRET variable is a server-side variable and, therefore, does not require the prefix.
 
 | Variable | Description | Where to Find |
 |----------|-------------|---------------|
