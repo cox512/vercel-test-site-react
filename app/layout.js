@@ -5,7 +5,11 @@ import LayoutWrapper from "../components/LayoutWrapper";
 export const metadata = {
   title: "Intercom Test Site - React",
   description: "A React-based Intercom test site",
-  viewport: "width=device-width, initial-scale=1.0",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1.0,
 };
 
 export default function RootLayout({ children }) {

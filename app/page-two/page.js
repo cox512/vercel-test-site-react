@@ -86,7 +86,8 @@ export default function PageTwo() {
 
   return (
     <div className="message-container">
-      <h1 className="message">Choose a background color</h1>
+      <h1 className="message">Product Tour Dropdown Testing</h1>
+      <h2 className="message">Choose a background color</h2>
 
       {/* Click-based dropdown */}
       <div className="color-selector">
@@ -99,9 +100,7 @@ export default function PageTwo() {
           <option value="blue">Blue</option>
         </select>
         {selectedColor && (
-          <p style={{ marginTop: "10px", textAlign: "center" }}>
-            Selected: {selectedColor}
-          </p>
+          <p className="status-text">Selected: {selectedColor}</p>
         )}
       </div>
 
@@ -153,9 +152,7 @@ export default function PageTwo() {
           )}
         </div>
         {selectedColorHover && (
-          <p style={{ marginTop: "10px", textAlign: "center" }}>
-            Selected: {selectedColorHover}
-          </p>
+          <p className="status-text">Selected: {selectedColorHover}</p>
         )}
       </div>
     </div>

@@ -1,3 +1,32 @@
+/* Center the page header properly */
+.about__display--row {
+    text-align: center;
+    margin: 20px auto;
+    max-width: 1200px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Page title and description styling */
+.page-title {
+    text-align: center;
+}
+
+.page-description {
+    text-align: center;
+}
+
+/* Modal section container styling */
+.modal-section-container {
+    text-align: center;
+}
+
+/* Page two status text styling */
+.status-text {
+    margin-top: 10px;
+    text-align: center;
+}
+
 .forms-container {
     display: flex;
     gap: 20px;
@@ -5,7 +34,10 @@
     margin: 20px auto;
     max-width: 1200px;
     flex-wrap: wrap;
-    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    background-color: #ffe4e1; /* Temporary debug background */
+    border: 2px solid #ff0000; /* Temporary debug border */
 }
 
 .form-column {
@@ -171,6 +203,29 @@
     .form-column {
         width: 100%;
         max-width: 100%;
+    }
+}
+
+/* Additional responsive handling for when sidebar is open and content gets too narrow */
+@media (max-width: 700px) {
+    .main-content.sidebar-open .forms-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .main-content.sidebar-open .form-column {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+/* Handle cases where developer tools or very narrow viewports cause layout issues */
+@media (max-width: 900px) {
+    .main-content.sidebar-open {
+        padding: 0 10px; /* Reduce padding on smaller screens */
+    }
+    .main-content.sidebar-open .forms-container {
+        margin: 20px 0; /* Reduce horizontal margin only when sidebar is open */
+        gap: 15px; /* Reduce gap between columns */
     }
 }
 
@@ -577,28 +632,21 @@
   transform: scale(1.1);
 }
 
-/* Adjust main content when sidebar is open */
+/* Main Content Area - simplified approach like traditional project */
 .main-content {
-  transition: all 0.3s ease-in-out;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  transition: margin-left 0.3s ease;
+  min-height: 100vh;
+  background-color: #f0f8ff; /* Temporary debug background */
 }
 
 .main-content.sidebar-open {
   margin-left: 200px;
-  align-items: stretch;
-  width: calc(100% - 200px);
-  padding: 0 20px;
-  box-sizing: border-box;
+  background-color: #e6ffe6; /* Temporary debug background */
 }
 
 .main-content.sidebar-closed {
   margin-left: 0;
-  align-items: center;
-  width: 100%;
-  padding: 0 20px;
-  box-sizing: border-box;
+  background-color: #f0f8ff; /* Temporary debug background */
 }
 
 /* Responsive adjustments */
@@ -614,11 +662,12 @@
   .main-content.sidebar-open {
     margin-left: 0; /* On mobile, sidebar overlays instead of pushing content */
     width: 100%;
+    padding: 0 15px;
   }
 
   .main-content.sidebar-closed {
     width: 100%;
-    padding: 0 15px;
+    padding: 0; /* Keep content perfectly centered */
   }
 }
 
@@ -636,9 +685,13 @@
     top: 10px;
   }
 
-  .main-content.sidebar-open,
-  .main-content.sidebar-closed {
+  .main-content.sidebar-open {
     width: 100%;
     padding: 0 10px;
+  }
+
+  .main-content.sidebar-closed {
+    width: 100%;
+    padding: 0; /* Keep content perfectly centered */
   }
 }

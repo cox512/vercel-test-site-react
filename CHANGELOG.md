@@ -400,3 +400,71 @@ The site is now a modern React/Next.js application with official Intercom SDK in
 
 ### Technical Details
 - Created `components/Modal.js`
+
+## [Layout Centering Fix] - 2025-01-27
+
+### Fixed
+- **Main Content Centering**: Fixed layout centering issues on the main landing page
+  - Main content now properly centers in the available space regardless of sidebar state
+  - Changed `.main-content.sidebar-open` from `align-items: stretch` to `align-items: center`
+  - Content remains centered both when sidebar is open and closed
+
+- **Responsive Layout for Developer Tools**: Added responsive handling for narrow viewports
+  - Added media query at 700px to stack form columns vertically when sidebar is open and space is limited
+  - Added media query at 900px to reduce padding and gaps for better space utilization
+  - Form columns now stack vertically instead of getting pushed off-screen when developer tools are opened
+  - Improved handling of reduced viewport width scenarios
+
+### Technical Changes
+- **CSS Updates**: Modified `public/styles.css` with four key improvements:
+  1. Fixed `.main-content.sidebar-open` alignment to keep content centered
+  2. Fixed `.main-content.sidebar-closed` padding to allow perfect centering
+  3. Added `@media (max-width: 700px)` rule for sidebar-open responsive stacking
+  4. Added `@media (max-width: 900px)` rule for improved spacing on smaller screens
+- **Responsive Behavior**: Content now adapts gracefully to viewport width changes
+- **Developer Experience**: Layout remains usable when browser developer tools are opened
+
+### Additional Fix
+- **Perfect Centering When Sidebar Closed**: Removed ALL padding from `.main-content.sidebar-closed`
+  - **Main Fix**: Changed from `padding: 0 20px` to `padding: 0`
+  - **Critical Fix**: Removed padding overrides in responsive media queries:
+    - `@media (max-width: 768px)`: Changed `.main-content.sidebar-closed` from `padding: 0 15px` to `padding: 0`
+    - `@media (max-width: 480px)`: Split combined rule and set `.main-content.sidebar-closed` to `padding: 0`
+  - **FINAL FIX**: Fixed 900px media query that was breaking centering:
+    - Changed `.forms-container` to `.main-content.sidebar-open .forms-container`
+    - The global `.forms-container` rule was removing `margin: auto` centering at viewports ≤ 900px
+    - Now margin reduction only applies when sidebar is open, preserving centering when closed
+  - **Result**: Content now perfectly centers on the page when sidebar is closed at ALL screen sizes
+  - **Maintains**: Appropriate padding and spacing for `.main-content.sidebar-open` state
+  - The `.forms-container` handles its own centering with `margin: 20px auto`
+
+### Next.js Viewport Fix
+- **Fixed Next.js Warning**: Moved viewport configuration from metadata export to separate viewport export
+  - Resolved: "Unsupported metadata viewport is configured in metadata export"
+  - **Changed**: `app/layout.js` - Split viewport into separate export as per Next.js App Router best practices
+  - **Result**: Eliminates console warning and ensures proper viewport handling
+
+### Styling Consolidation
+- **Moved All Styling to CSS**: Consolidated all inline styles and styling code to `public/styles.css`
+  - **Removed Inline Styles**: Replaced all `style={{}}` attributes with CSS classes
+  - **Added CSS Classes**:
+    - `.page-title` - for main page heading centering
+    - `.page-description` - for main page description centering
+    - `.modal-section-container` - for modal section centering
+    - `.status-text` - for page-two status text styling (margin-top: 10px, text-align: center)
+  - **Updated Components**:
+    - `app/page.js` - Replaced 3 inline styles with CSS classes
+    - `app/page-two/page.js` - Replaced 2 inline styles with CSS classes
+  - **Result**: All styling is now centralized in CSS file, improving maintainability and performance
+
+### Fixed Environment Variables Issue
+- **Fixed Environment Variables for Client Components**: Properly configured Intercom tour and survey IDs
+  - **Problem**: Environment variables without `NEXT_PUBLIC_` prefix don't work in client components
+  - **Solution**: Updated `.env.local` file to add required prefixes and updated component:
+    - `TRIGGER_TOUR_ID` → `NEXT_PUBLIC_TRIGGER_TOUR_ID=598573`
+    - `TOUR_LINK_ID` → `NEXT_PUBLIC_TOUR_LINK_ID=617424`
+    - `LARGE_SURVEY_ID` → `NEXT_PUBLIC_LARGE_SURVEY_ID=24407803`
+    - `SMALL_SURVEY_ID` → `NEXT_PUBLIC_SMALL_SURVEY_ID=24407890`
+    - `SURVEY_LINK_ID` → `NEXT_PUBLIC_SURVEY_LINK_ID=24407890`
+  - **Updated**: `components/Sidebar.js` to use properly prefixed environment variables
+  - **Result**: All sidebar buttons and links work correctly with environment variables (not hardcoded values)

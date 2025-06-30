@@ -17,10 +17,10 @@ export default function Home() {
 
   return (
     <main className="about__display--row">
-      <h1 style={{ textAlign: "center" }}>
+      <h1 className="page-title">
         Intercom Test Site - NPM React installation
       </h1>
-      <p style={{ textAlign: "center" }}>
+      <p className="page-description">
         Please enter your details to log in to Intercom.
       </p>
 
@@ -33,7 +33,7 @@ export default function Home() {
 
         <div className="form-column">
           {/* Modal trigger buttons */}
-          <div className="form-container" style={{ textAlign: "center" }}>
+          <div className="form-container modal-section-container">
             <h3>Modals</h3>
             <button
               className="modal-trigger-btn"

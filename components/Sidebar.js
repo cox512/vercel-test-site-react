@@ -67,13 +67,15 @@ export default function Sidebar({ isOpen, onToggle }) {
             <button
               type="button"
               className="sidebar-button sidebar-button-secondary"
-              onClick={() => handleStartTour(598573)}
+              onClick={() =>
+                handleStartTour(process.env.NEXT_PUBLIC_TRIGGER_TOUR_ID)
+              }
             >
               Start Tour
             </button>
             <a
               className="sidebar-link"
-              href="https://vercel-test-site-react.vercel.app?product_tour_id=598573"
+              href={`https://vercel-test-site-react.vercel.app?product_tour_id=${process.env.NEXT_PUBLIC_TOUR_LINK_ID}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -86,20 +88,24 @@ export default function Sidebar({ isOpen, onToggle }) {
             <button
               type="button"
               className="sidebar-button sidebar-button-secondary"
-              onClick={() => handleStartSurvey(24407803)}
+              onClick={() =>
+                handleStartSurvey(process.env.NEXT_PUBLIC_LARGE_SURVEY_ID)
+              }
             >
               Large Survey
             </button>
             <button
               type="button"
               className="sidebar-button sidebar-button-secondary"
-              onClick={() => handleStartSurvey(24407890)}
+              onClick={() =>
+                handleStartSurvey(process.env.NEXT_PUBLIC_SMALL_SURVEY_ID)
+              }
             >
               Small Survey
             </button>
             <a
               className="sidebar-link"
-              href="https://vercel-test-site-react.vercel.app?intercom_survey_id=24407890"
+              href={`https://vercel-test-site-react.vercel.app?intercom_survey_id=${process.env.NEXT_PUBLIC_SURVEY_LINK_ID}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -127,14 +133,14 @@ export default function Sidebar({ isOpen, onToggle }) {
               onClick={handleNewTabClick}
               className="sidebar-link"
             >
-              New Tab
+              Link to New Tab
             </a>
             <a
               href="/page-two"
               onClick={handlePageTwoClick}
               className="sidebar-link"
             >
-              Page Two
+              Link to Dropdowns
             </a>
           </div>
           <div className="sidebar-section">
