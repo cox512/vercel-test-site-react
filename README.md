@@ -38,29 +38,28 @@ Before you can deploy to Vercel, you need to get a copy of the code on your comp
 - **On Linux**: Press `Ctrl + Alt + T`
 
 #### Step 1c: Navigate to Where You Want to Store the Project
+Navigate to your Desktop or Documents folder (or wherever you want to store the project):
 ```bash
-# Navigate to your Desktop or Documents folder (or wherever you want to store the project)
 cd Desktop
-
 ```
 
 #### Step 1d: Clone Your Forked Repository
+Replace 'YOUR-USERNAME' with your actual GitHub username:
 ```bash
-# Replace 'YOUR-USERNAME' with your actual GitHub username
 git clone https://github.com/YOUR-USERNAME/vercel-test-site-react.git
 ```
 
 **What this does**: Downloads a complete copy of the project code to your computer.
 
 #### Step 1e: Enter the Project Directory
+Navigate into the project folder that was just created:
 ```bash
-# Navigate into the project folder that was just created
 cd vercel-test-site-react
 ```
 
 #### Step 1f: Install Project Dependencies (Optional - Only for Local Development)
+Install the required packages (only needed if you plan to run the project locally):
 ```bash
-# Install the required packages (only needed if you plan to run the project locally)
 npm install
 ```
 
@@ -116,8 +115,8 @@ After running these commands, you should see a folder called `vercel-test-site-r
 - Your terminal should be open and you should be in the project directory
 
 ##### Step B1: Install the Vercel CLI Tool
+Install Vercel's command-line tool globally on your computer:
 ```bash
-# Install Vercel's command-line tool globally on your computer
 npm install -g vercel
 ```
 
@@ -128,16 +127,16 @@ npm install -g vercel
 - On Windows: Run your command prompt as Administrator
 
 ##### Step B2: Verify the Installation
+Check if Vercel CLI was installed correctly:
 ```bash
-# Check if Vercel CLI was installed correctly
 vercel --version
 ```
 
 **What this does**: Shows the version number of Vercel CLI if it installed correctly. You should see something like `Vercel CLI 32.5.0` (numbers may vary).
 
 ##### Step B3: Login to Your Vercel Account
+Start the login process:
 ```bash
-# Start the login process
 vercel login
 ```
 
@@ -152,19 +151,17 @@ vercel login
 **If the browser doesn't open**: Copy the URL that appears in your terminal and paste it into your web browser manually.
 
 ##### Step B4: Navigate to Your Project Directory
+Make sure you're in the right folder and verify you're in the right place by listing the files:
 ```bash
-# Make sure you're in the right folder
 cd vercel-test-site-react
-
-# Verify you're in the right place by listing the files
 ls
 ```
 
 **What you should see**: You should see files like `package.json`, `next.config.mjs`, and folders like `app/`, `components/`, `public/`.
 
 ##### Step B5: Deploy Your Project
+Start the deployment process:
 ```bash
-# Start the deployment process
 vercel
 ```
 
@@ -210,12 +207,15 @@ Unlike the dashboard method, with CLI you need to add environment variables thro
 3. Click the "Settings" tab found in the top navigation bar.
 4. Click on the  "Environment Variables" option in the left-hand sidebar
 5. Add all the required environment variables (see Step 3 in the main guide)
-6. Redeploy by running `vercel --prod` in your terminal
+6. Redeploy by running the command below in your terminal:
+
+```bash
+vercel --prod
+```
 
 ##### Future Deployments
 Once set up, deploying updates is easy:
 ```bash
-# Deploy updates to production
 vercel --prod
 ```
 
@@ -262,18 +262,7 @@ You'll need to set up the following environment variables in your Vercel project
 2. Select your deployed project
 3. Click on the "Settings" tab in the nav bar that runs across the top of the page
 4. Click the "Environment Variables" in the left-hand sidebar
-5. Add each of the variables below with their corresponding value:
-
-```
-NEXT_PUBLIC_INTERCOM_APP_ID=your_app_id_here
-INTERCOM_JSON_SECRET=your_secret_key_here
-NEXT_PUBLIC_TRIGGER_TOUR_ID=tour_id
-NEXT_PUBLIC_TOUR_LINK_ID=tour_id
-NEXT_PUBLIC_LARGE_SURVEY_ID=survey_id
-NEXT_PUBLIC_SMALL_SURVEY_ID=survey_id
-NEXT_PUBLIC_SURVEY_LINK_ID=survey_id
-```
-
+5. Add each of the variables listed in the table above with their corresponding values from your Intercom workspace
 6. Click "Save" after adding all the variables
 7. Redeploy your application to apply the changes
 
@@ -281,20 +270,28 @@ NEXT_PUBLIC_SURVEY_LINK_ID=survey_id
 
 To run the project locally for development:
 
+Create a `.env.local` file in the root directory:
 ```bash
-# Create a .env.local file in the root directory
 touch .env.local
-
-# Add your environment variables to .env.local
-echo "NEXT_PUBLIC_INTERCOM_APP_ID=your_app_id" >> .env.local
-echo "INTERCOM_JSON_SECRET=your_secret_key" >> .env.local
-# ... add other variables from above
-
-# Start the development server
-npm run dev
-
-# Open your browser to http://localhost:3000
 ```
+
+Add your environment variables to the `.env.local` file by opening it in a text editor and adding:
+```
+NEXT_PUBLIC_INTERCOM_APP_ID=your_app_id
+INTERCOM_JSON_SECRET=your_secret_key
+NEXT_PUBLIC_TRIGGER_TOUR_ID=tour_id
+NEXT_PUBLIC_TOUR_LINK_ID=tour_id
+NEXT_PUBLIC_LARGE_SURVEY_ID=survey_id
+NEXT_PUBLIC_SMALL_SURVEY_ID=survey_id
+NEXT_PUBLIC_SURVEY_LINK_ID=survey_id
+```
+
+Start the development server:
+```bash
+npm run dev
+```
+
+Then open your browser to http://localhost:3000
 
 ## Project Structure
 

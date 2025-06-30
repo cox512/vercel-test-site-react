@@ -784,3 +784,11 @@ The site is now a modern React/Next.js application with official Intercom SDK in
     - **Body Class Management**: Modal component now adds `modal-open` class to body when any modal is open
     - **Pointer Events Blocking**: Added CSS rule `body.modal-open .sidebar, body.modal-open .sidebar-toggle { pointer-events: none; }`
   - **Result**: ✅ Sidebar and toggle now completely unresponsive when modals are open through both z-index hierarchy and explicit pointer event blocking
+
+## [v4.5] - 2024-12-20
+
+### Documentation
+- **README Code Block Cleanup**: Moved all explanatory text and comments outside of code blocks to improve GitHub copy functionality
+  - Users can now click the copy button on GitHub and get only the actual commands without explanatory text
+  - Cleaned up installation, deployment, and local development sections
+  - Fixed project structure indentation
