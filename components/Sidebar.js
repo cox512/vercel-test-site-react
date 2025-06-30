@@ -99,7 +99,7 @@ export default function Sidebar({ isOpen, onToggle }) {
             </button>
             <a
               className="sidebar-link"
-              href={`https://vercel-test-site-react.vercel.app?product_tour_id=${process.env.NEXT_PUBLIC_TOUR_LINK_ID}`}
+              href={`https://intercom-test-site-react.vercel.app?product_tour_id=${process.env.NEXT_PUBLIC_TOUR_LINK_ID}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -129,7 +129,7 @@ export default function Sidebar({ isOpen, onToggle }) {
             </button>
             <a
               className="sidebar-link"
-              href={`https://vercel-test-site-react.vercel.app?intercom_survey_id=${process.env.NEXT_PUBLIC_SURVEY_LINK_ID}`}
+              href={`https://intercom-test-site-react.vercel.app?intercom_survey_id=${process.env.NEXT_PUBLIC_SURVEY_LINK_ID}`}
               target="_blank"
               rel="noopener noreferrer"
             >
