@@ -19,15 +19,17 @@ export default function Modal({
 
     if (isOpen) {
       document.addEventListener("keydown", handleEsc);
-      // Prevent background scrolling
+      // Prevent background scrolling and disable interactions
       document.body.style.overflow = "hidden";
+      document.body.classList.add("modal-open");
     }
 
     return () => {
       document.removeEventListener("keydown", handleEsc);
       document.body.style.overflow = "auto";
+      document.body.classList.remove("modal-open");
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, blocking]);
 
   if (!isOpen) return null;
 

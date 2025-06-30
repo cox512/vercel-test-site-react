@@ -468,3 +468,28 @@ The site is now a modern React/Next.js application with official Intercom SDK in
     - `SURVEY_LINK_ID` → `NEXT_PUBLIC_SURVEY_LINK_ID=24407890`
   - **Updated**: `components/Sidebar.js` to use properly prefixed environment variables
   - **Result**: All sidebar buttons and links work correctly with environment variables (not hardcoded values)
+
+### FINAL LAYOUT CENTERING FIX - RESOLVED
+- **Successfully Fixed Layout Centering Issue**: Content now properly centers when sidebar is closed
+  - **Root Cause**: Unwanted CSS transforms were being applied to main content area
+  - **Solution**: Added `transform: translateX(0px)` to `.main-content.sidebar-closed` to override unwanted transforms
+  - **Key Properties**:
+    - `display: flex` + `flex-direction: column` + `align-items: center` for vertical centering
+    - `transform: translateX(0px)` to cancel any interfering transforms
+    - `transition: none !important` for immediate positioning without animation
+  - **Result**: ✅ Content perfectly centers when sidebar is closed, works normally when sidebar is open
+  - **Cleaned**: Removed all temporary debug backgrounds and borders
+
+### **Modal Overlay Z-Index Fix**
+- **Fixed Modal Overlay Interaction Blocking**: Implemented comprehensive solution to disable sidebar when modals are open
+  - **Issue**: Sidebar remained responsive to clicks when modals were open despite z-index adjustments
+  - **Root Cause**: Complex stacking context and pointer event conflicts
+  - **Solution**: Multi-layered approach for guaranteed interaction blocking:
+    - **Z-Index Restructuring**: Separated z-index values to eliminate stacking context issues:
+      - Modal overlay: z-index increased from 1000 → 9999 (highest priority)
+      - Sidebar: z-index reduced from 1000 → 100 (low priority)
+      - Sidebar toggle: z-index reduced from 1001 → 101 (above sidebar, below modal)
+    - **Enhanced Modal Overlay**: Added explicit viewport coverage (`width: 100vw`, `height: 100vh`) and `pointer-events: auto`
+    - **Body Class Management**: Modal component now adds `modal-open` class to body when any modal is open
+    - **Pointer Events Blocking**: Added CSS rule `body.modal-open .sidebar, body.modal-open .sidebar-toggle { pointer-events: none; }`
+  - **Result**: ✅ Sidebar and toggle now completely unresponsive when modals are open through both z-index hierarchy and explicit pointer event blocking
