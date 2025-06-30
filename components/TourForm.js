@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { startTour } from "@intercom/messenger-js-sdk";
+import { attemptAutoRecovery } from "./IntercomProvider";
 
 export default function TourForm({ onClose }) {
   const [tourId, setTourId] = useState("");
@@ -12,6 +13,14 @@ export default function TourForm({ onClose }) {
     const parsedTourId = parseInt(tourId);
 
     if (parsedTourId) {
+      // Try auto-recovery first
+      if (!attemptAutoRecovery()) {
+        alert(
+          "Intercom is currently shut down. Use 'Load as Anonymous Visitor' button in the Action Buttons section for immediate recovery."
+        );
+        return;
+      }
+
       try {
         startTour(parsedTourId);
         console.log("Intercom tour started with ID:", parsedTourId);

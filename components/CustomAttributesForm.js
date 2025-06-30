@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { update } from "@intercom/messenger-js-sdk";
+import { attemptAutoRecovery } from "./IntercomProvider";
 import { addJWTToUpdateData } from "../utils/jwt";
 
 export default function CustomAttributesForm() {
@@ -25,6 +26,14 @@ export default function CustomAttributesForm() {
       return;
     }
 
+    // Try auto-recovery first
+    if (!attemptAutoRecovery()) {
+      alert(
+        "Intercom is currently shut down. Use 'Load as Anonymous Visitor' button in the Action Buttons section for immediate recovery."
+      );
+      return;
+    }
+
     // Create an object with the custom attribute
     const customData = {
       [formData.attribute_name]: formData.attribute_value,
@@ -45,8 +54,10 @@ export default function CustomAttributesForm() {
     try {
       update(finalUpdateData);
       console.log("Intercom updated with custom data:", finalUpdateData);
+      alert("Custom attribute updated successfully!");
     } catch (error) {
       console.error("Error updating Intercom:", error);
+      alert("Error updating custom attribute. Check console for details.");
     }
   };
 
@@ -59,7 +70,7 @@ export default function CustomAttributesForm() {
 
   return (
     <div className="form-container">
-      <h3>Add Custom Attributes</h3>
+      <h3>Custom Attributes</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="attribute_name">Attribute Name:</label>
@@ -69,7 +80,8 @@ export default function CustomAttributesForm() {
             name="attribute_name"
             value={formData.attribute_name}
             onChange={handleChange}
-            placeholder="e.g., subscription_type"
+            required
+            placeholder="e.g., subscription_plan"
           />
         </div>
         <div className="form-group">
@@ -80,12 +92,13 @@ export default function CustomAttributesForm() {
             name="attribute_value"
             value={formData.attribute_value}
             onChange={handleChange}
+            required
             placeholder="e.g., premium"
           />
         </div>
         <div className="button-group">
           <button type="submit" className="submit-btn">
-            Update User
+            Update Attributes
           </button>
           <button type="button" className="clear-btn" onClick={clearForm}>
             Clear Form

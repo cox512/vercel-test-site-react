@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { update } from "@intercom/messenger-js-sdk";
+import { attemptAutoRecovery } from "../../components/IntercomProvider";
 import { addJWTToUpdateData } from "../../utils/jwt";
 
 export default function PageTwo() {
@@ -12,6 +13,14 @@ export default function PageTwo() {
   useEffect(() => {
     // Call update method after navigation to this page
     const performUpdate = async () => {
+      // Try auto-recovery first
+      if (!attemptAutoRecovery()) {
+        console.log(
+          "Intercom is currently shut down. Skipping update call on page-two."
+        );
+        return;
+      }
+
       try {
         const updateData = {
           last_request_at: parseInt(new Date().getTime() / 1000),

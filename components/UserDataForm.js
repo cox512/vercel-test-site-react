@@ -68,8 +68,10 @@ export default function UserDataForm() {
     try {
       boot(finalBootData);
       console.log("Intercom booted with data:", finalBootData);
+      alert("User booted successfully!");
     } catch (error) {
       console.error("Error booting Intercom:", error);
+      alert("Error booting user. Check console for details.");
     }
   };
 

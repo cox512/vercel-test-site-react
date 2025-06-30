@@ -1,10 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import { startTour, startSurvey, trackEvent } from "@intercom/messenger-js-sdk";
+import { attemptAutoRecovery } from "./IntercomProvider";
 
 export default function Sidebar({ isOpen, onToggle }) {
   const handleStartTour = (tourId) => {
+    // Try auto-recovery first
+    if (!attemptAutoRecovery()) {
+      alert(
+        "Intercom is currently shut down. Use 'Load as Anonymous Visitor' button in the Action Buttons section for immediate recovery."
+      );
+      return;
+    }
+
     try {
       startTour(tourId);
       console.log("Intercom tour started:", tourId);
@@ -14,6 +22,14 @@ export default function Sidebar({ isOpen, onToggle }) {
   };
 
   const handleStartSurvey = (surveyId) => {
+    // Try auto-recovery first
+    if (!attemptAutoRecovery()) {
+      alert(
+        "Intercom is currently shut down. Use 'Load as Anonymous Visitor' button in the Action Buttons section for immediate recovery."
+      );
+      return;
+    }
+
     try {
       startSurvey(surveyId);
       console.log("Intercom survey started:", surveyId);
@@ -23,6 +39,14 @@ export default function Sidebar({ isOpen, onToggle }) {
   };
 
   const handleTrackEvent = (eventName) => {
+    // Try auto-recovery first
+    if (!attemptAutoRecovery()) {
+      alert(
+        "Intercom is currently shut down. Use 'Load as Anonymous Visitor' button in the Action Buttons section for immediate recovery."
+      );
+      return;
+    }
+
     try {
       trackEvent(eventName);
       console.log("Intercom event tracked:", eventName);

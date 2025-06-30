@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { trackEvent } from "@intercom/messenger-js-sdk";
+import { attemptAutoRecovery } from "./IntercomProvider";
 
 export default function TrackEventForm({ onClose }) {
   const [formData, setFormData] = useState({
@@ -19,6 +20,14 @@ export default function TrackEventForm({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Try auto-recovery first
+    if (!attemptAutoRecovery()) {
+      alert(
+        "Intercom is currently shut down. Use 'Load as Anonymous Visitor' button in the Action Buttons section for immediate recovery."
+      );
+      return;
+    }
 
     const eventName = formData.event_name.toLowerCase();
     const metadataName = formData.metadata_name.toLowerCase();
@@ -71,9 +80,7 @@ export default function TrackEventForm({ onClose }) {
   return (
     <div className="form-container">
       <h3>Track Events</h3>
-      <p>
-        You can dismiss this modal by clicking anywhere outside of it.
-      </p>
+      <p>You can dismiss this modal by clicking anywhere outside of it.</p>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="event_name">Event Name:</label>

@@ -139,41 +139,39 @@
     background-color: #E64A19;
 }
 
-.bot-buttons {
-    position: relative;
-    text-align: left;
-    margin: 20px auto;
-    max-width: 1200px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* Disabled state for action buttons */
+.empty-update-btn:disabled, .shutdown-btn:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
-.button-bot, .button-tour-one, .button-tour-two, .button-survey-one, .button-survey-two {
-    background-color: #4CAF50;
+.empty-update-btn:disabled:hover, .shutdown-btn:disabled:hover {
+    background-color: #cccccc;
+    transform: none;
+}
+
+/* Anonymous visitor recovery button */
+.anonymous-recovery-btn {
+    background-color: #28a745;
     color: white;
-    padding: 10px 15px;
+    padding: 10px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin: 5px;
-    display: inline-block;
+    font-size: 16px;
+    margin: 25px 5px 5px 5px;
+    transition: background-color 0.2s ease;
 }
 
-.button-bot:hover, .button-tour-one:hover, .button-tour-two:hover, .button-survey-one:hover, .button-survey-two:hover {
-    background-color: #45a049;
+.anonymous-recovery-btn:hover {
+    background-color: #218838;
 }
 
-.tour_link, .survey_link {
-    color: #2196F3;
-    text-decoration: underline;
-    margin: 5px;
-    display: inline-block;
-}
 
-.tour_link:hover, .survey_link:hover {
-    color: #1976D2;
-}
+
+
 
 .button-help-center {
     display: inline-block;
@@ -377,13 +375,21 @@
     bottom: 0;
     width: 100vw;
     height: 100vh;
+    min-width: 100vw;
+    min-height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: flex-start;
     padding-top: 80px;
-    z-index: 9999;
+    z-index: 10000;
     pointer-events: auto;
+    /* Ensure overlay covers everything */
+    margin: 0;
+    transform: none;
+    overflow: hidden;
+    /* Force coverage of all content */
+    box-sizing: border-box;
 }
 
 .modal-content {
@@ -634,9 +640,18 @@
   transform: scale(1.1);
 }
 
-/* Disable sidebar interactions when modal is open */
+/* Disable sidebar interactions when modal is open and ensure proper overlay coverage */
+body.modal-open {
+  overflow: hidden;
+  position: relative;
+}
+
 body.modal-open .sidebar,
 body.modal-open .sidebar-toggle {
+  pointer-events: none;
+}
+
+body.modal-open .main-content {
   pointer-events: none;
 }
 

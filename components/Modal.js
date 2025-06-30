@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 
 export default function Modal({
   isOpen,
@@ -33,7 +34,7 @@ export default function Modal({
 
   if (!isOpen) return null;
 
-  return (
+  const modalContent = (
     <div className="modal-overlay" onClick={blocking ? undefined : onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
@@ -46,4 +47,7 @@ export default function Modal({
       </div>
     </div>
   );
+
+  // Render modal at document.body level to cover entire viewport
+  return createPortal(modalContent, document.body);
 }
