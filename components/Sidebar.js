@@ -170,7 +170,7 @@ export default function Sidebar({ isOpen, onToggle }) {
           <div className="sidebar-section">
             <a
               className="sidebar-button sidebar-button-help-icon"
-              href="https://intercom.help/narnia-4d7ae34e3be0"
+              href="https://intercom.help/banans-rule"
               target="_blank"
               rel="noopener noreferrer"
               title="Help Center"
