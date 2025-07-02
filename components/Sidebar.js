@@ -99,7 +99,7 @@ export default function Sidebar({ isOpen, onToggle }) {
             </button>
             <a
               className="sidebar-link"
-              href={`https://intercom-test-site-react.vercel.app?product_tour_id=${process.env.NEXT_PUBLIC_TOUR_LINK_ID}`}
+              href={process.env.NEXT_PUBLIC_TOUR_LINK}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -129,7 +129,7 @@ export default function Sidebar({ isOpen, onToggle }) {
             </button>
             <a
               className="sidebar-link"
-              href={`https://intercom-test-site-react.vercel.app?intercom_survey_id=${process.env.NEXT_PUBLIC_SURVEY_LINK_ID}`}
+              href={process.env.NEXT_PUBLIC_SURVEY_LINK}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -170,7 +170,7 @@ export default function Sidebar({ isOpen, onToggle }) {
           <div className="sidebar-section">
             <a
               className="sidebar-button sidebar-button-help-icon"
-              href="https://intercom.help/banans-rule"
+              href={process.env.NEXT_PUBLIC_HELP_CENTER_URL}
               target="_blank"
               rel="noopener noreferrer"
               title="Help Center"
